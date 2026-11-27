@@ -12,11 +12,12 @@ class ClientError(Exception):
     """Raised when a request still fails after all retries."""
 
 
-def get(url):
-    """Fetch url and return the response body as text."""
+def get(url, headers=None):
+    """Fetch url and return the response body as text. headers: optional dict of HTTP headers."""
     for attempt in range(MAX_RETRIES):
         try:
-            with urllib.request.urlopen(url, timeout=TIMEOUT_SECONDS) as resp:
+            req = urllib.request.Request(url, headers=headers or {})
+            with urllib.request.urlopen(req, timeout=TIMEOUT_SECONDS) as resp:
                 return resp.read().decode()
         except OSError:
             if attempt < MAX_RETRIES - 1:
