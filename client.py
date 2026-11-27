@@ -3,7 +3,7 @@
 import time
 import urllib.request
 
-MAX_RETRIES = 3
+MAX_RETRIES = 5
 BACKOFF_SECONDS = 2
 TIMEOUT_SECONDS = 10
 
